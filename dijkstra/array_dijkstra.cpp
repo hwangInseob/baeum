@@ -5,6 +5,8 @@
 #define DEFAULT_NODE_COUNT 6
 #define MAX_NODE_WEIGHT 20
 #define INF INT32_MAX
+
+//임의로 주어진 테스트케이스
 static int input_map_arr[6][6] =
 {
     {0,     2,      5,      1,      INF,    INF},
@@ -14,20 +16,22 @@ static int input_map_arr[6][6] =
     {INF,   INF,    1,      1,      0,      2},
     {INF,   INF,    5,      INF,    2,      0}
 };
+//
 
-static int min_weight_map_arr[6] = {INF};
+//각 노드 최소 가중치 저장할 arr
+static int min_weight_map_arr[6] = {0};
 
 static std::set<int> visited_node_set;
-
 
 void init_first_step()
 {
     for(int i = 0 ; i < DEFAULT_NODE_COUNT ; i++)
     {
-        min_weight_map_arr[i] = input_map_arr[0][i];
+        if (i == 0)
+            min_weight_map_arr[i] = 0;
+        else
+            min_weight_map_arr[i] = INF;
     }
-
-    visited_node_set.insert(0);
 
     printf("---------------------------------------------\n");
     printf("|   init min_weight_map[] with first Node   |\n");
@@ -53,7 +57,6 @@ int get_next_node()
     for(int i = 0 ; i < DEFAULT_NODE_COUNT; i++)
     {
         if(min_weight_map_arr[i] != INF &&                          // 갈 수 없는 노드가 아니고
-            min_weight_map_arr[i] != 0 &&                           // 현재 자기 노드가 아니고
             min_weight_map_arr[i] < min_weight &&                   // 현재 min_weight보다 작고
             visited_node_set.find(i) == visited_node_set.end())     // 방문된 node가 아니면
         {
@@ -104,6 +107,11 @@ void update_min_weight_map_arr(int current_node)
     visited_node_set.insert(current_node);
 }
 
+int get_result_weight()
+{
+    return min_weight_map_arr[DEFAULT_NODE_COUNT - 1];
+}
+
 void find_min_weight_route()
 {
     int next_node;
@@ -111,6 +119,7 @@ void find_min_weight_route()
 
     while(visited_node_set.size() != DEFAULT_NODE_COUNT)
     {
+        std::cin.get();
         next_node = get_next_node();
         printf("next_node : %d \n" ,next_node);
         update_min_weight_map_arr(next_node);
@@ -120,11 +129,21 @@ void find_min_weight_route()
 
 int main(int argc, char* argv[])
 {
+
     init_first_step();
 
     find_min_weight_route();
 
+    int result = get_result_weight();
 
-    
+    printf("---------------------------------------------\n");
+    printf("|                 E   N   D                 |\n");
+    printf("---------------------------------------------\n");
+    printf(" reuslt : %d\n", result);
+    printf("\n");
+    printf("\n");
+    printf("\n");
+
+
 
 }
