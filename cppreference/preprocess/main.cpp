@@ -5,14 +5,27 @@
     #define MOCK
     #include "mockIncludeFile.hpp"          //mockIncludeFile.hpp include 가능하니깐 true
 #else
-    
 #endif
+// __has_include("") -E-
+
+//pragma pack() test
+#include "myPragmaPack.hpp"
+//pragma pack() test -E-
 
 
 int main(int argc, char** argv)
 {
+    //__has_include("") test
 #ifdef MOCK
     mockIncludeFile::print_mock();
 #endif
+    //__has_include("") test -E-
+
+
+    //pragma pack() test
+    myPragmaPack::print_all();
+    //pragma pack() test -E-
+
+
     return 0;
 }
